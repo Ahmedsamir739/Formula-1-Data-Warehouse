@@ -75,7 +75,7 @@ A few real issues encountered and solved during this build — documented here b
 
 - [x] Bronze layer — raw ingestion, all 14 tables
 - [x] Silver layer — cleaning, typing, standardization
-- [x] Gold layer — star schema (6 dimensions, 8 facts)
+- [x] Gold layer — galaxy schema (6 dimensions, 8 facts)
 - [x] Exploratory & advanced analytics (SQL-based, 11 categories)
 
 ---
