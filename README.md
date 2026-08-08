@@ -13,7 +13,7 @@ This project was built to practice real-world data engineering patterns — ETL 
 ```
 ┌─────────────┐      ┌─────────────┐      ┌─────────────┐
 │   BRONZE    │  →   │   SILVER    │  →   │    GOLD     │
-│ Raw CSV     │      │ Cleaned &   │      │ Star schema │
+│ Raw CSV     │      │ Cleaned &   │      │galaxy schema│
 │ ingestion   │      │ typed data  │      │ (dims/facts)│
 └─────────────┘      └─────────────┘      └─────────────┘
 ```
