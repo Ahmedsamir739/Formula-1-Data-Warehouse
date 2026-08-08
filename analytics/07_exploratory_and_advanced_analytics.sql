@@ -7,7 +7,7 @@ Purpose     : Exploratory Data Analysis (EDA), Advanced Analytics and
               This is the "notebook" of the project: a collection of 
               standalone SELECT queries used to explore the data, 
               sanity-check the warehouse build, and surface business 
-              insights — it does not create or modify any tables, views,
+              insights â€” it does not create or modify any tables, views,
               or procedures.
 
 Dataset     : Formula 1 World Championship (Ergast/Kaggle), covering the 
@@ -36,7 +36,7 @@ full walkthrough):
 
 /* ============================================================
    DATABASE EXPLORATION
-   Purpose: Get familiar with the database structure itself —
+   Purpose: Get familiar with the database structure itself â€”
    what tables exist and what columns are inside each one.
    Useful as a starting point for anyone new to the project.
    ============================================================ */
@@ -80,7 +80,7 @@ SELECT 'dim_races', COUNT(*) FROM gold.dim_races;
 
 /* ============================================================
    DATE EXPLORATION
-   Purpose: Understand the time range the data actually covers —
+   Purpose: Understand the time range the data actually covers â€”
    important before building any trend/time-based analysis later.
    ============================================================ */
 
@@ -113,7 +113,7 @@ FROM gold.dim_drivers;
 
 /* ============================================================
    MEASURES EXPLORATION
-   Purpose: Get the core numeric totals — the "big picture" numbers
+   Purpose: Get the core numeric totals â€” the "big picture" numbers
    that every other insight will be compared against.
    ============================================================ */
 
@@ -180,7 +180,7 @@ FROM gold.fact_pit_stops p
 JOIN gold.dim_drivers d ON p.driver_id = d.driver_id
 GROUP BY d.full_name
 ORDER BY total_pit_stops DESC;
--- Drivers grouped by nationality — count of drivers per nationality
+-- Drivers grouped by nationality â€” count of drivers per nationality
 SELECT 
     nationality,
     COUNT(*) AS driver_count
@@ -262,7 +262,7 @@ ORDER BY season_year, ranking;
 
 /* ============================================================
    CHANGE OVER TIME ANALYTICS
-   Purpose: Analyze historical F1 trends across seasons and eras —
+   Purpose: Analyze historical F1 trends across seasons and eras â€”
    tracking race volume, driver/constructor dominant streaks, 
    and performance evolution.
    ============================================================ */
@@ -320,7 +320,7 @@ ORDER BY season_year;
 
 /* ============================================================
    CUMULATIVE ANALYSIS
-   Purpose: Track running totals over time — useful for seeing
+   Purpose: Track running totals over time â€” useful for seeing
    the overall growth trajectory.
    ============================================================ */
 
@@ -380,8 +380,8 @@ ORDER BY r.race_date;
 
 /* ============================================================
    PERFORMANCE ANALYSIS
-   Purpose: Compare something against its own baseline — either
-   its historical average, or the prior year — to judge whether
+   Purpose: Compare something against its own baseline â€” either
+   its historical average, or the prior year â€” to judge whether
    it's over/underperforming.
    ============================================================ */
 
@@ -434,7 +434,7 @@ ORDER BY r.season_year;
 /* ============================================================
    PART-TO-WHOLE ANALYSIS
    Purpose: See what percentage each group contributes to the
-   total, not just its raw value — useful for understanding
+   total, not just its raw value â€” useful for understanding
    relative importance, not just size.
    ============================================================ */
 
