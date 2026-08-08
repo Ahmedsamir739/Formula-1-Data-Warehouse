@@ -20,7 +20,7 @@ This project was built to practice real-world data engineering patterns — ETL 
 
 - **Bronze** — 14 tables, one per source CSV, loaded via a single stored procedure (`bronze.load_bronze`). All columns kept as `VARCHAR` to guarantee the raw load never fails on a malformed row.
 - **Silver** — 14 cleaned, typed tables. Nulls standardized, types cast, quote-stripped text, and business-meaningful letter codes (e.g. driver/constructor status codes) mapped to readable labels. See [Known Data Quirks](#known-data-quirks-worth-knowing) below.
-- **Gold** — a star schema exposed as views: 6 dimension tables and 8 fact tables at varying grains (per-race, per-lap, per-pit-stop, championship-standings snapshots). Fully documented in [`docs/gold_layer_catalog.md`](docs/gold_layer_catalog.md).
+- **Gold** — a galaxy schema exposed as views: 6 dimension tables and 8 fact tables at varying grains (per-race, per-lap, per-pit-stop, championship-standings snapshots). Fully documented in [`docs/gold_layer_catalog.md`](docs/gold_layer_catalog.md).
 - **Analytics** — a full SQL-based exploratory and advanced analytics layer on top of the Gold views: database/dimension/date/measures exploration, magnitude and ranking analysis, change-over-time and cumulative analysis using window functions, performance benchmarking, part-to-whole analysis, and driver/constructor segmentation.
 
 ---
@@ -43,7 +43,7 @@ This project was built to practice real-world data engineering patterns — ETL 
 ├── docs/
 │   ├── gold_layer_catalog.md
 │   ├── tables_modeling.drawio       (raw table relationships)
-│   └── gold_layer_erd.drawio        (star schema: dims + facts, color-coded)
+│   └── gold_layer_erd.drawio        (galaxy schema: dims + facts, color-coded)
 └── README.md
 ```
 
