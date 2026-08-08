@@ -42,7 +42,7 @@ This project was built to practice real-world data engineering patterns — ETL 
 │   └── 07_eda_and_advanced_analytics.sql
 ├── docs/
 │   ├── gold_layer_catalog.md
-│   ├── silver_layer_erd.drawio      (raw table relationships)
+│   ├── tables_modeling.drawio       (raw table relationships)
 │   └── gold_layer_erd.drawio        (star schema: dims + facts, color-coded)
 └── README.md
 ```
@@ -77,7 +77,6 @@ A few real issues encountered and solved during this build — documented here b
 - [x] Silver layer — cleaning, typing, standardization
 - [x] Gold layer — star schema (6 dimensions, 8 facts)
 - [x] Exploratory & advanced analytics (SQL-based, 11 categories)
-- [ ] Power BI dashboard layer
 
 ---
 
