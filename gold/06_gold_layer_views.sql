@@ -1,3 +1,4 @@
+
 /*
 ===============================================================================
 Description: Gold Layer Creation (Star-Schema Dimensional Model Views)
@@ -18,14 +19,15 @@ Key Operations & Transformations:
    - `dim_races`: Performs a `LEFT JOIN` between `silver.races` and `silver.circuits` 
      to enrich race schedule records with circuit names[cite: 6].
 
-3. Dimensional Modeling (14 Total Views):
-   - Dimension Views (6):
+3. Dimensional Modeling (15 Total Views):
+   - Dimension Views (7):
      * `dim_circuits`            : Circuit metadata, location, and coordinates[cite: 6].
      * `dim_constructors`        : Constructor / Team references and nationalities[cite: 6].
      * `dim_drivers`             : Driver details, full names, numbers, codes, and DOBs[cite: 6].
      * `dim_status`              : Lookup definitions for race statuses[cite: 6].
      * `dim_seasons`             : Historical F1 seasons[cite: 6].
      * `dim_races`               : Grand Prix schedules with embedded circuit names[cite: 6].
+     * `dim_date`                : Generated calendar date dimension for time intelligence in BI reporting.
 
    - Fact Views (8):
      * `fact_results`            : Main Grand Prix results, finishing positions, and metrics[cite: 6].
@@ -38,7 +40,7 @@ Key Operations & Transformations:
      * `fact_constructor_results`: Overall constructor scoring per race[cite: 6].
 
 4. View Verification:
-   - Concludes with `SELECT *` queries across all 14 Gold views to audit final presentation models[cite: 6].
+   - Concludes with `SELECT *` queries across all 15 Gold views to audit final presentation models[cite: 6].
 ===============================================================================
 */
 
@@ -141,6 +143,40 @@ SELECT
 FROM silver.races r
 LEFT JOIN silver.circuits c 
     ON r.circuitId = c.circuitId;
+GO
+
+--dim_date
+IF OBJECT_ID('gold.dim_date', 'V') IS NOT NULL
+    DROP VIEW gold.dim_date;
+GO
+CREATE OR ALTER VIEW gold.dim_date AS
+WITH DateBounds AS (
+    SELECT 
+        MIN(CAST(date AS DATE)) AS minDate,
+        DATEADD(YEAR, 1, MAX(CAST(date AS DATE))) AS maxDate
+    FROM silver.races
+),
+Tally AS (
+    SELECT TOP (SELECT DATEDIFF(DAY, minDate, maxDate) + 1 FROM DateBounds)
+        ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) - 1 AS rn
+    FROM sys.all_objects a
+    CROSS JOIN sys.all_objects b
+)
+SELECT
+    CONVERT(INT, FORMAT(DATEADD(DAY, t.rn, d.minDate), 'yyyyMMdd')) AS dateKey,
+    DATEADD(DAY, t.rn, d.minDate)                        AS date,
+    YEAR(DATEADD(DAY, t.rn, d.minDate))                  AS year,
+    DATEPART(QUARTER, DATEADD(DAY, t.rn, d.minDate))      AS quarter,
+    MONTH(DATEADD(DAY, t.rn, d.minDate))                  AS month,
+    DATENAME(MONTH, DATEADD(DAY, t.rn, d.minDate))        AS monthName,
+    DAY(DATEADD(DAY, t.rn, d.minDate))                    AS day,
+    DATEPART(WEEKDAY, DATEADD(DAY, t.rn, d.minDate))      AS dayOfWeek,
+    DATENAME(WEEKDAY, DATEADD(DAY, t.rn, d.minDate))      AS dayName,
+    DATEPART(WEEK, DATEADD(DAY, t.rn, d.minDate))         AS weekOfYear,
+    CASE WHEN DATEPART(WEEKDAY, DATEADD(DAY, t.rn, d.minDate)) IN (1,7)
+         THEN 1 ELSE 0 END                                AS isWeekend
+FROM Tally t
+CROSS JOIN DateBounds d;
 GO
 
 --fact_results
@@ -297,6 +333,7 @@ select * from gold.dim_drivers
 select * from gold.dim_status
 select * from gold.dim_seasons
 select * from gold.dim_races
+select * from gold.dim_date
 select * from gold.fact_results
 select * from gold.fact_sprint_results
 select * from gold.fact_qualifying
@@ -305,4 +342,5 @@ select * from gold.fact_pit_stops
 select * from gold.fact_driver_standings
 select * from gold.fact_constructor_standings
 select * from gold.fact_constructor_results
+select * from gold.dim_date
 
