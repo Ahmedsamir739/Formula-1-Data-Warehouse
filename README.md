@@ -41,6 +41,7 @@ This project was built to practice real-world data engineering patterns — ETL 
 ├── analytics/
 │   └── 07_eda_and_advanced_analytics.sql
 ├── docs/
+|   ├── F1_Data_Warehouse_Power_BI.pbix
 │   ├── gold_layer_catalog.md
 │   ├── tables_modeling.drawio       (raw table relationships)
 │   └── gold_layer_erd.drawio        (galaxy schema: dims + facts, color-coded)
@@ -77,11 +78,12 @@ A few real issues encountered and solved during this build — documented here b
 - [x] Silver layer — cleaning, typing, standardization
 - [x] Gold layer — galaxy schema (6 dimensions, 8 facts)
 - [x] Exploratory & advanced analytics (SQL-based, 11 categories)
-
+- [x] Power BI Data Modeling and Visual Dashboards
 ---
 
 ## Tools Used
 
 - Microsoft SQL Server / SSMS
+- Power BI (data modeling / Visual Dashboards)
 - draw.io (data modeling / ER diagrams)
 - Ergast F1 dataset (via Kaggle)
